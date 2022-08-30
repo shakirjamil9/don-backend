@@ -16,6 +16,29 @@ const tourData = [
   },
 ];
 
+exports.checkBody = (req, res, next) => {
+  const { name, price } = req.body;
+  if (!name || !price) {
+    return res.status(400).json({
+      status: 'fail',
+      message: 'Name or Price is Missing',
+    });
+  }
+  next();
+};
+
+exports.checkID = (req, res, next, val) => {
+  // const tourId = tourData[tourData.length - 1].id;
+  const tourId = tourData.at(-1).id;
+  if (val > tourId) {
+    res.status(404).json({
+      status: 'fail',
+      message: 'Tour not found',
+    });
+  }
+  next();
+};
+
 exports.getAllTours = (req, res) => {
   res.status(200).json({
     status: 'success',
@@ -36,24 +59,12 @@ exports.createTour = (req, res) => {
 exports.getSingleTour = (req, res) => {
   const { id } = req.params;
   const tour = tourData.find((el) => el.id == id);
-  if (!tour) {
-    return res.status(404).json({
-      status: 'fail',
-      message: 'Tour not found',
-    });
-  }
   res.status(200).json(tour);
 };
 
 exports.updateTour = (req, res) => {
   const { id } = req.params;
   const tour = tourData.find((el) => el.id == id);
-  if (!tour) {
-    return res.status(404).json({
-      status: 'fail',
-      message: 'Tour not found',
-    });
-  }
 
   res.status(202).json({
     status: 'success',
@@ -64,12 +75,7 @@ exports.updateTour = (req, res) => {
 exports.deleteTour = (req, res) => {
   const { id } = req.params;
   const tour = tourData.find((el) => el.id == id);
-  if (!tour) {
-    return res.status(404).json({
-      status: 'fail',
-      message: 'Tour not found',
-    });
-  }
+
   res.status(204).json({
     status: 'success',
     data: null,
