@@ -15,5 +15,4 @@ app.use(
 
 app.use('/api/v1/tours', tourRoute);
 
-const PORT = 8080;
-app.listen(PORT, () => console.log(`Server is Running on ${PORT} PORT`));
+module.exports = app;
