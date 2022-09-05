@@ -6,7 +6,7 @@ const tourRoute = require('./routes/tourRoutes');
 const app = express();
 
 app.use(express.json());
-
+app.use(express.static('./public'));
 app.use(
   morgan('tiny', {
     stream: fs.createWriteStream('./logs/access.log', { flags: 'a' }),
