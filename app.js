@@ -6,7 +6,9 @@ const tourRoute = require('./routes/tourRoutes');
 const app = express();
 
 app.use(express.json());
-app.use(express.static('./public'));
+app.use(express.static(`${__dirname}/public`));
+// console.log("Check Above Path");
+
 app.use(
   morgan('tiny', {
     stream: fs.createWriteStream('./logs/access.log', { flags: 'a' }),

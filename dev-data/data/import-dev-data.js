@@ -7,21 +7,14 @@ dotenv.config({ path: './config.env' });
 
 // const app = require('./app');
 
-const DB = process.env.DATABASE.replace(
-  '<PASSWORD>',
+const DB = process.env.DATABASE_URI.replace(
+  '<password>',
   process.env.DATABASE_PASSWORD
 );
 
-mongoose
-  .connect(DB, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log('DB Connection Successful!');
-  });
+mongoose.connect(DB).then(() => {
+  console.log('DB Connection Successful!');
+});
 
 const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/tours-simple.json`, 'utf-8')
@@ -52,5 +45,3 @@ if (process.argv[2] === '--import') {
 } else if (process.argv[2] === '--delete') {
   deleteData();
 }
-
-// console.log(process.argv);

@@ -15,28 +15,28 @@ mongoose
     console.log(err);
   });
 
-const schema = new mongoose.Schema({
-  name: {
-    type: String,
-    unique: true,
-  },
-  age: {
-    type: Date,
-  },
-});
+// const schema = new mongoose.Schema({
+//   name: {
+//     type: String,
+//     unique: true,
+//   },
+//   age: {
+//     type: Date,
+//   },
+// });
 
-const User = mongoose.model('User', schema);
+// const User = mongoose.model('User', schema);
 
-User.create({
-  name: 'Rimsha Don',
-  age: '2000-02-18',
-})
-  .then((res) => {
-    console.log(res);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+// User.create({
+//   name: 'Rimsha Don',
+//   age: '2000-02-18',
+// })
+//   .then((res) => {
+//     console.log(res);
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   });
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`Server is Running on ${PORT} PORT`));

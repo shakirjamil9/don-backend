@@ -1,3 +1,5 @@
+const Tour = require('../models/tourModel');
+
 const tourData = [
   {
     id: 1,
@@ -16,16 +18,16 @@ const tourData = [
   },
 ];
 
-exports.checkBody = (req, res, next) => {
-  const { name, price } = req.body;
-  if (!name || !price) {
-    return res.status(400).json({
-      status: 'fail',
-      message: 'Name or Price is Missing',
-    });
-  }
-  next();
-};
+// exports.checkBody = (req, res, next) => {
+//   const { name, price } = req.body;
+//   if (!name || !price) {
+//     return res.status(400).json({
+//       status: 'fail',
+//       message: 'Name or Price is Missing',
+//     });
+//   }
+//   next();
+// };
 
 exports.checkID = (req, res, next, val) => {
   // const tourId = tourData[tourData.length - 1].id;
@@ -46,14 +48,19 @@ exports.getAllTours = (req, res) => {
   });
 };
 
-exports.createTour = (req, res) => {
-  const id = tourData.at(-1).id + 1;
-  const newTour = { id, ...req.body };
-  tourData.push(newTour);
-  res.status(201).json({
-    status: 'success',
-    data: newTour,
-  });
+exports.createTour = async (req, res) => {
+  try {
+    const tour = await Tour.create(req.body);
+    res.status(201).json({
+      status: 'success',
+      tour,
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: 'fail',
+      err,
+    });
+  }
 };
 
 exports.getSingleTour = (req, res) => {
