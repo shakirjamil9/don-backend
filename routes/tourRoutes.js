@@ -6,11 +6,7 @@ const {
   getSingleTour,
   updateTour,
   deleteTour,
-  checkID,
-  checkBody,
 } = require('../controllers/tourController');
-
-router.param('id', checkID);
 
 router.route('/').get(getAllTours).post(createTour);
 router.route('/:id').get(getSingleTour).patch(updateTour).delete(deleteTour);
