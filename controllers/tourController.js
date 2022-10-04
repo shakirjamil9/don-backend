@@ -2,7 +2,15 @@ const Tour = require('../models/tourModel');
 
 exports.getAllTours = async (req, res) => {
   try {
-    const tours = await Tour.find();
+    let query = Tour.find();
+
+    if (req.query.limitFields) {
+      let { limitFields } = req.query;
+      limitFields = limitFields.replace(/,/g, ' ');
+      query = query.select(limitFields);
+    }
+
+    const tours = await query;
     res.status(200).json({
       status: 'success',
       result: tours.length,
